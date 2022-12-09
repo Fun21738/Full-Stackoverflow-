@@ -3,3 +3,4 @@ AS
 BEGIN
 DELETE FROM Questions  WHERE id=@id
 END
+

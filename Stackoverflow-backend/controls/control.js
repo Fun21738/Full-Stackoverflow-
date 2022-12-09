@@ -1,38 +1,95 @@
-// const { encryptpass, comparePass } = require("../helpers/encryption");
-// const { validateSchema } = require("../helpers/validation");
+const mssql =require("mssql")
+const sqlConfig= require("../config/index")
 
-// const users = [{
-//       name: "John Doe",
-//       email: "johndoe@gmail.com",
-//       username: "Jenny",
-//       password: "$2b$08$WC5ln8bsk6CIpS5rnpf6zuvZhqcKEqTx6Wt0VIfn99CVGl6MhNkKG"
-// }]
+const getQuestions = async (req, res)=>{
+    try {
+        //connect to the database
+        const pool= await mssql.coonect(sqlConfig)
+        const response= await pool.request().execute("getQuestions")
+        const Questions = response.recordset()
+        // if empty
+        if(Questions){
+          return  res.status(200).json(Questions)
+        } else{
+            res.status(404).json({
+                message: ('no questions found')
+            })
+        }
+        // res.status(202).json()
+    } catch (error) {
+        res.status(404).json({
+            error: error.message
+        })
+    }
+}
 
-// module.exports = {
-//       getusers: (req, res) => {
-//             res.send(users)
-//       },
 
-//       login: async (req, res) => {
-//             const data = req.body;
-//             const user = users.find(user => user.email === data.email)
-//             if (user) {
-//                   let loggedin = await comparePass(data.password, user.password).catch(err => console.log(err))
 
-//                   if (loggedin) {
-//                         return res.send("user logged in successfully")
-//                   }else{
-//                         return res.send("Wrong credentials")
-//                   }
-//             } else {
-//                   return res.send("User doesn't exist")
-//             }
-//       },
+const addQuestion =(req, res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
 
-//       signup: async (req, res) => {
-//             const data = req.body;
+const deleteQuestions= (req, res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
 
-//             let hashed_pass = await encryptpass(data.password)
-//             res.send({ ...data, password: hashed_pass })
-//       }
-// }
+const getAnswers= (req, res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+const addAnswers= (req, res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+const addComments= (req, res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+const getComments= (req, res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+const getAskedQuiz = (req, res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+
+module.exports= {
+    getQuestions,
+    addQuestion,
+    deleteQuestions,
+    getAnswers,
+    addAnswers,
+    addComments,
+    getComments,
+    getAskedQuiz
+}
+
