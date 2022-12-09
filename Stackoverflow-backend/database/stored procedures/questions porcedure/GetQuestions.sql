@@ -1,10 +1,5 @@
-CREATE PROCEDURE getQuestion (@id varchar(100))
+CREATE OR ALTER PROCEDURE getQuestions
 AS
 BEGIN
-SELECT *FROM Questions WHERE id=@id
-
+SELECT *FROM Questions 
 END
-
-
-
-
