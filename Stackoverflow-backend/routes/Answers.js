@@ -1,9 +1,10 @@
 const express= require('express')
-const { addAnswers, getAnswers } = require('../controls/control')
+const { getAnswers, addAnswers } = require('../controls/control')
+// const { addAnswers, getAnswers } = require('../controls/control')
 
 const router= express.Router()
 
-router.get("",getAnswers)
+router.get("/",getAnswers)
 router.post("/", addAnswers)
 
 

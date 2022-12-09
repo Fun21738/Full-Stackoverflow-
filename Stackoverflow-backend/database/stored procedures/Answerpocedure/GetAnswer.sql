@@ -1,6 +1,6 @@
-CREATE PROCEDURE getAnswers (@id varchar(100))
+CREATE PROCEDURE getAnswers
 AS
 BEGIN
-SELECT *FROM Answers WHERE id=@id
+SELECT *FROM Answers 
 
 END

@@ -2,8 +2,9 @@ const express=require('express')
 const dotenv= require('dotenv')
 const questionRoutes= require("./routes/questions")
 const AnswersRoutes= require("./routes/Answers")
-const CommentsRoutes= require("./routes/Comments")
 const AskedQuestionsRoutes= require("./routes/AskedQuestions")
+const CommentsRoutes= require ("./routes/Comments")
+
 const cors= require('cors')
 
 

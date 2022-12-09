@@ -1,6 +1,6 @@
-CREATE PROCEDURE getComments (@id varchar(100))
+CREATE or alter PROCEDURE getComments
 AS
 BEGIN
-SELECT *FROM Comments WHERE id=@id
+SELECT *FROM Comments
 
 END

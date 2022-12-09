@@ -1,0 +1,12 @@
+###
+GET http://localhost:4000/Comments
+
+###
+POST http://localhost:4000/Comments
+Content-Type: application/json
+
+{
+    "userid": "abcdefgh",
+    "answersid": "abc",
+    "comments": "ftrgyewsjhkgyfhcdjnsxmzhjnc xufjcnm"
+}
