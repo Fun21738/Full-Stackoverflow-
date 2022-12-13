@@ -1,9 +1,9 @@
-CREATE PROCEDURE insertanswers (@id varchar(20),@userid varchar(30),@questionid varchar(30),@username varchar(250),@answers varchar(250),
+CREATE PROCEDURE addOpinions (@id varchar(20),@Clientsid varchar(30),@Quizesid varchar(30),@comments varchar(250),
 @likes int,@dislikes int)
 AS
 BEGIN
 
-INSERT INTO  Answers (id,userid, questionid, username, answers, likes, dislikes)
-VALUES(@id,@userid, @questionid,@username,@answers,@likes,@dislikes)
+INSERT INTO  addOpinions(id,Clientsid,Quizesid, comments, likes, dislikes)
+VALUES(@id,@clientsid, @Quizesid,@comments,@likes,@dislikes)
 
 END

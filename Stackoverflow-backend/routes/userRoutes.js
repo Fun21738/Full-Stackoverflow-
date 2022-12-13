@@ -1,14 +1,12 @@
-const { Router} = require('express')
-const { signupUser, loginUser, homepage } = require('../controllers/userController')
-const { verifyToken } = require('../Middleware/verifyToken')
+const express= require('express')
+const { signup} = require('../controls/userControls.js')
+const { addLogin}= require("../controls/userControls")
 
-const userRoutes= Router()
+const router= express.Router()
 
-userRoutes.post('/signup', signupUser)
-userRoutes.post('/login', loginUser)
-userRoutes.get('/home',verifyToken, homepage)
+router.post('/signup', signup)
+router.post('/Login', addLogin)
 
 
-module.exports={
-    userRoutes
-}
+
+module.exports= router

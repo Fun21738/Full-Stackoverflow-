@@ -1,10 +1,9 @@
-create table Answers
+create  table Opinions
 (
 id varchar(20) primary key not null,
-userid varchar(30) foreign key references users not null, 
-questionid varchar(30) foreign key references Questions not null,
-username varchar(250) NOT NULL,
-answers varchar(250) NOT NULL,
+Clientsid varchar(30) foreign key references Clients(id) not null, 
+Quizesid varchar(30) foreign key references Quizes (id) not null,
+comments varchar(250) NOT NULL,
 likes int,
 dislikes int,
 )

@@ -1,12 +1,12 @@
 const express= require('express')
-const { getQuestions, deleteQuestions, addQuestion } = require('../controls/control')
+const { getQuizes, deleteQuestions, addQuizes } = require('../controls/control')
 
 
 const router= express.Router()
 
-router.get("/", getQuestions)
+router.get("/quiz", getQuizes)
 router.delete('/:id', deleteQuestions)
-router.post("/", addQuestion)
+router.post("/addQuiz", addQuizes)
 
 
 module.exports = router

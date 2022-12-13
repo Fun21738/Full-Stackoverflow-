@@ -1,9 +1,7 @@
-create or alter procedure addComments(@id varchar(30), @userid varchar(30), @answersid varchar(30), @comments varchar(250))
+create or alter procedure addChats
+(@id varchar(20), @Clientsid varchar(30), @Quizesid varchar(30), @Opinionsid varchar(20),@reply varchar (250))
 as
 begin
-insert into Comments(id, userid, answersid, comments)
-values(@id, @userid, @answersid, @comments)
+insert into addChats(id, Clientsid, Quizesid, Opinionsid,reply)
+values(@id, @Clientsid, @Quizesid, @Opinionsid,@reply)
 end
-
-
-

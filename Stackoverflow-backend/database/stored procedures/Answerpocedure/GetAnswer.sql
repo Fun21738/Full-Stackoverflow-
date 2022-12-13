@@ -1,6 +1,6 @@
-CREATE PROCEDURE getAnswers
+CREATE PROCEDURE getOpinions
 AS
 BEGIN
-SELECT *FROM Answers 
+SELECT * FROM Opinions 
 
 END

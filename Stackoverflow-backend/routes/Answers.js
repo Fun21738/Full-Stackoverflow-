@@ -1,6 +1,5 @@
 const express= require('express')
 const { getAnswers, addAnswers } = require('../controls/control')
-// const { addAnswers, getAnswers } = require('../controls/control')
 
 const router= express.Router()
 

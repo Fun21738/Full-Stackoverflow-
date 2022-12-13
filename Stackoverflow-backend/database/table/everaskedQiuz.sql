@@ -1,6 +1,6 @@
-create table AskedQuiz 
+create table EverAskedQuiz 
 (
 id int,
-username varchar (250) NOT NULL,
+Clientsid varchar(30) foreign key references Clients(id) not null,
 quiz varchar (250) NOT NULL,
 )

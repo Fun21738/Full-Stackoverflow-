@@ -2,11 +2,22 @@
 GET http://localhost:4000/Comments
 
 ###
-POST http://localhost:4000/Comments
+POST http://localhost:4000/localhost:4000/Questions
 Content-Type: application/json
 
 {
+    "id":"abc",
     "userid": "abcdefgh",
-    "answersid": "abc",
-    "comments": "ftrgyewsjhkgyfhcdjnsxmzhjnc xufjcnm"
+    "question":"rhegnzruwgznv"
+
+}
+###
+POST  http://localhost:4000/users/Login
+Content-Type: application/json
+
+{
+    "username": "abc",
+    "email": "boe@gmail.com",
+    "password": "ftrgyewsjhkgyfhcdjnsxmzhjnc xufjcnm"
+  
 }
