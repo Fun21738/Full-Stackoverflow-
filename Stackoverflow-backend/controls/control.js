@@ -2,20 +2,20 @@ const mssql =require("mssql")
 const sqlConfig= require("../config/index")
 const {v4} =require('uuid')
 
-const getQuestions = async (req, res)=>{
+const getQuizes = async (req, res)=>{
     try {
         //create a coooenction btwn the database and the backend
         const pool = await mssql.connect(sqlConfig)
-       const response= await pool.request().execute('getQuestions')
+       const response= await pool.request().execute('getQuizes')
        //return data as record sets
        const questions= await response.recordset
        //if there are questions
        if(questions.length){
-        return res.status(200).json(questions)
+        return res.status(200).json({questions})
        } else{
         //if none
         res.status(404).json({
-            message: " hey no questions found"
+            message: "  no questions found"
         })
        }
     } catch (error) {
@@ -27,9 +27,9 @@ const getQuestions = async (req, res)=>{
 }
 
 
-const addQuestion = async (req, res)=>{
+const addQuizes = async (req, res)=>{
     try {
-       const {userid,questions} =req.body
+       const {Clientsid,questions} =req.body
        const questionsid=v4
 
        const id =questionsid()
@@ -38,16 +38,18 @@ const addQuestion = async (req, res)=>{
        await pool 
        .request()
        .input('id',mssql.VarChar,id)
-       .input('userid',mssql.VarChar,userid)
+       .input('Clientsid',mssql.VarChar,Clientsid)
        .input('questions',mssql.VarChar,questions)
-       .execute ('addquestion')
+       .execute ('addQuizes')
        res.status(200).json({
         message: "Question submitted succesfully"
        })
               
     } catch (error) {
+        
        res.status(404).json({
-        message:"answers submitted failed"
+        message: error.message
+        // message:"answers submitted failed"
        })
     }
 }
@@ -63,8 +65,9 @@ const deleteQuestions= (req, res)=>{
 
 const getAnswers= async (req, res)=>{
     try {
+        
         const pool= await mssql.connect(sqlConfig)
-        const response= await pool.request ().execute ("getAnswers")
+        const response= await pool.request().execute ("getAnswers")
         const Answers =response.recordset
         console.log(Answers);
 
@@ -95,7 +98,6 @@ const addAnswers= async (req, res)=>{
         .request()
         .input('id', mssql.VarChar, id)
         .input('questionid', mssql.VarChar, questionid)
-        .input('username', mssql.VarChar, username)
         .input('userid', mssql.VarChar, userid)
         .input('answers', mssql.VarChar, answers)
         .input('likes', mssql.Int, likes)
@@ -106,7 +108,7 @@ const addAnswers= async (req, res)=>{
         })
     } catch (error) {
         res.status(404).json({
-            message: "answer not submitted"
+            message: error.message
         })
     }
 }
@@ -131,7 +133,7 @@ const addComments=  async(req, res)=>{
         })
     } catch (error) {
         res.status(404).json({
-            message:"comments submitted failed"
+            message:error.message
         })
     }
 }
@@ -179,13 +181,14 @@ const getAskedQuiz = async (req, res)=>{
 }
 
 module.exports= {
-    getQuestions,
-    addQuestion,
+    getQuizes,
+    addQuizes,
     deleteQuestions,
     getAnswers,
     addAnswers,
     addComments,
     getComments,
-    getAskedQuiz
+    getAskedQuiz,
+       
 }
 

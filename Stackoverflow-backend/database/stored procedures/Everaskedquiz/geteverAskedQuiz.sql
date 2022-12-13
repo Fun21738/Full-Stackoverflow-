@@ -1,6 +1,6 @@
-CREATE PROCEDURE getAskedQuiz (@id varchar(100))
+CREATE PROCEDURE  getEverAskedQuiz 
 AS
 BEGIN
-SELECT *FROM AskedQuiz WHERE id=@id
+SELECT *FROM EverAskedQuiz 
 
 END

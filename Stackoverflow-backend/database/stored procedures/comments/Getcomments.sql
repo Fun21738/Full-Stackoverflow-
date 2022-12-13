@@ -1,6 +1,6 @@
-CREATE or alter PROCEDURE getComments
+CREATE or alter PROCEDURE getChats
 AS
 BEGIN
-SELECT *FROM Comments
+SELECT *FROM Chats
 
 END

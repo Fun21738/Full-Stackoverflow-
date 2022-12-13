@@ -1,9 +1,10 @@
-create table Comments
+create table Chats
 (
 id varchar(20) primary key not null,
-userid varchar(30) foreign key references users not null, 
-answersid varchar(20)  foreign key references Answers not null ,
-comments varchar(250) NOT NULL,
+Clientsid varchar(30) foreign key references Clients(id) not null,
+Quizesid varchar(30) foreign key references Quizes (id) not null,
+Opinions varchar(20) foreign key references Opinions (id) not null,
+reply varchar(250) NOT NULL,
 )
 
 
