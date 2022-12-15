@@ -1,6 +1,5 @@
-CREATE PROCEDURE deletequestion(@id varchar(100))
-AS
-BEGIN
-DELETE FROM Questions  WHERE id=@id
-END
-
+create or alter procedure deleteQuestion(@id varchar(30))
+as
+begin
+update Quizes set isdeleted=1 where id=@id
+end

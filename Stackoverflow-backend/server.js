@@ -19,7 +19,7 @@ app.use("/Questions", questionRoutes)
 app.use("/Answers", AnswersRoutes)
 app.use("/Comments", CommentsRoutes)
 app.use("/AskedQuetions", AskedQuestionsRoutes)
-app.use("/users", userRoutes)
+app.use("/Clients", userRoutes)
 
 app.listen(process.env.PORT|| 4000, ()=>{
     console.log(`server is running ${process.env.PORT}`);

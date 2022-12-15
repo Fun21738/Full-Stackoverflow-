@@ -3,8 +3,8 @@ const { addComments, getComments } = require('../controls/control')
 
 const router= express.Router()
 
-router.get("",getComments)
-router.post("/", addComments)
+router.get("/get",getComments)
+router.post("/comment", addComments)
 
 
-module.exports =router
+module.exports =router 

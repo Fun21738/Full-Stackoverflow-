@@ -2,7 +2,7 @@
 GET http://localhost:4000/Comments
 
 ###
-POST http://localhost:4000/localhost:4000/Questions
+POST http://localhost:4000/localhost:4000/addQuizes
 Content-Type: application/json
 
 {
