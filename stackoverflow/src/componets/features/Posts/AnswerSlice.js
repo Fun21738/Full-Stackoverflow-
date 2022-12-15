@@ -14,7 +14,7 @@ export const createNewPost = createAsyncThunk('posts/createNewPost',
           await axios.put(url, {});
           let res = null;
             posts.forEach(async(item) => {
-              if (item.id == newQuestion.id){
+              if (item.id === newQuestion.id){
                 res = await axios.post(url, newQuestion);
               }
               else{
@@ -29,6 +29,8 @@ export const createNewPost = createAsyncThunk('posts/createNewPost',
         }
     }
 );
+
+
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', 
     async () => {
@@ -51,6 +53,8 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts',
         }
     }
 )
+
+
 
 export const answerSlice = createSlice({
     name: 'postAnswers',

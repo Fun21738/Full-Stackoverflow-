@@ -1,28 +1,68 @@
 import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import "./Home.css";
-// import { CommentPost, likePost, dislikePostAction } from "../Actions/Actions";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState} from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import PostAnswer from "./PostAnswer";
+// import PostComments from "./PostComments";
 import { RiHeart3Line } from "react-icons/ri";
 import { HiThumbDown } from "react-icons/hi";
-import { FaRegCommentDots } from "react-icons/fa";
+// import { FaRegCommentDots } from "react-icons/fa";
 import { fetchPosts } from "../features/Posts/postSlice";
+import PostComments from "./PostComments";
+//  import { stringify } from "uuid";
 
 function Home() {
   const posts = useSelector((state) => state.posts.posts);
   console.log({ posts });
   const dispatch = useDispatch();
   const [OpenModal, setOpenModal] = useState(false);
+  const [OpenCommentModal,setOpenCommentModal]= useState(false)
+// const [like,setLike] = useState (false);
+// const [Dislike,setDislike] = useState (false);
+
+// const [likeActive,setLikeActive] = useState (false);
+// const [DislikeActive,setDislikeActive] = useState (false);
+
 
   const answers = useSelector((state) => state.posts.posts);
   
   console.log({ posts });
   console.log(answers);
   const [checked, setChecked] = React.useState(false);
+//   const LikePost = (id) => {
+//     fetch('/Likes',{
+//     method :"put",
+//     headers:{
+//       "context-type":"application/json",
+//       "Authorization":"Bearer"+LocalStorage.getItems("jwt")
+//     },
+//     body:JSON>stringify({
+//       postId:id
+//     }).then(res=>res.json())
+//     .then(result=>{
+//         console.log(result);
+//     })
+// })
+
+// const dislikePost = (id) => {
+//   fetch('/Dislikes',{
+//   method :"put",
+//   headers:{
+//     "context-type":"application/json",
+//     "Authorization":"Bearer"+LocalStorage.getItems("jwt")
+//   },
+//   body:JSON>stringify({
+//     postId:id
+//   }).then(res=>res.json())
+//   .then(result=>{
+//       console.log(result);
+//   })
+// })
+// 
+//   // const { like } = useSelector((state) => state.like)
 
   // const handleCommentPost = (id) => {
   //   dispatch(CommentPost(id));
@@ -44,7 +84,7 @@ function Home() {
     <div>
       <Navbar />
       <div className="bp">
-        <div className="side">
+        
           <div className="mac">
             <h3 className="other">Others</h3>
             <Link to="/EveraskedQ" className="hp">
@@ -56,7 +96,7 @@ function Home() {
               Post a question
             </Link>
           </div>
-        </div>
+  
 
         <div className="main">
           <h3 className="posty">Posted questions and answers !! </h3>
@@ -72,7 +112,7 @@ function Home() {
                 </div>
 
                 {post.quiz}
-                <div className="icons">
+                <div className="anz">
                   <div className="mode">
                     <PostAnswer
                       post={post}
@@ -86,29 +126,57 @@ function Home() {
                     {post.answers?.map((answers) => {
                       return (
                         <div className="ans" key={answers.id}>
-                          <p>answers</p>
+                          <p className="answ">answer</p>
                           <h5>{answers}</h5>
 
                       <div className="lab">
                       <div className="ico">
                           <RiHeart3Line className="icon"/>
-                            <HiThumbDown className="icon"/>
-                            <FaRegCommentDots className="icon"/>
-                          </div>
+                           {/* onClick={()=>{Likepost(post.id)}} */}
+                               {post?.like?.length}likes
+                            <HiThumbDown className="icon" /><span>{11}</span>
 
-                          <label>
+                            
+                            <PostComments 
+                            className="icon" 
+                             post={post}
+                             posts={posts}
+                             open={OpenCommentModal}
+                             onClose={() => setOpenCommentModal(false)}
+                            /> 
+                            
+
+
+                            <label>
                             <input
+                            className="input"
                               type="checkbox"
                               defaultChecked={checked}
                               onChange={() => setChecked(!checked)}
                             />
                             Check Me!
                           </label>
+                          </div>
+
+                         
                       </div>
                          
                         </div>
                       );
                     })}
+                <div className="comments">
+                {post.comments?.map((comments) => {
+return(
+  <div className="ans" key={comments.id}>
+    
+
+    <h5>{comments}</h5>
+    </div>
+);
+})}
+                </div>
+
+
                   </div>
 
                 
