@@ -3,7 +3,7 @@ const { getAskedQuiz  } = require('../controls/control')
 
 const router= express.Router()
 
-router.get("",getAskedQuiz )
+router.get("/",getAskedQuiz )
 
 
 module.exports =router

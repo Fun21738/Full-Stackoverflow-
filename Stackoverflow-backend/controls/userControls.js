@@ -17,11 +17,11 @@ const signup =async (req, res)=>{
             })
         }
 
-     const {username,email} =req.body
-      const userid =v4     
+     const {username,email,confirm} =req.body
+      const Clientsid =v4     
 
       const pool =await mssql.connect (sqlConfig)
-      const id = userid()
+      const id = Clientsid()
 
        const salt = await bcrypt.genSalt(10)
         const password=await bcrypt.hash( req.body.password, salt)
@@ -32,8 +32,8 @@ const signup =async (req, res)=>{
       .input ('username',mssql.VarChar,username)
       .input ('email',mssql.VarChar,email)
       .input ('password',mssql.VarChar,password)
-      // .input ('confrim',mssql.VarChar,confirm)
-      .execute('adduser')).rowsAffected
+      .input ('confirm',mssql.VarChar,confirm)
+      .execute('addClient')).rowsAffected
       console.log(signup);
       res.status (200).json({
         message:"signup successfully"
@@ -41,7 +41,8 @@ const signup =async (req, res)=>{
     } catch (error) {
       console.log(error);
        res. status (404).json({
-        message:"signup failed"
+        // message:"signup failed"
+        message: error.message
       })
     }
 }
@@ -58,7 +59,9 @@ const addLogin =async (req, res)=>{
       }
 
      const {username,email,password} =req.body
-      const userid =v4  
+      const userid =v4 
+      console.log(password); 
+      console.log(email);
       const pool =await mssql.connect (sqlConfig)
 
       const id = userid()
@@ -69,7 +72,7 @@ const addLogin =async (req, res)=>{
       .input ('username',mssql.VarChar,username)
       .input ('email',mssql.VarChar,email)
       .input ('password',mssql.VarChar,password)
-      .execute('addLogin')
+      .execute('checkLogins')
 
       //create a token
       const token= await jwt.sign({id, email}, "SECRET", {
@@ -86,6 +89,8 @@ const addLogin =async (req, res)=>{
       })
     }
 }
+
+
 
 
 module.exports= {
