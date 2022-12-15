@@ -55,6 +55,29 @@ const addQusetion = async (req, res)=>{
     }
 }
 
+
+const searchQuiz = async (req, res)=>{
+    try {
+       const {questions} =req.body
+       const pool= await mssql.connect (sqlConfig)
+       let searchResult= await (
+       await pool 
+       .request()
+       .input('questions',mssql.VarChar,questions)
+       .execute ('SearchQuiz')).recordset
+       console.log(searchResult);
+       res.status(200).json({searchResult})
+              
+    } catch (error) {
+        
+       res.status(404).json({
+        message: error.message
+        // message:"answers submitted failed"
+       })
+    }
+}
+
+
 const deleteQuestions= async (req, res)=>{
     try {
         const {id}= req.params
@@ -191,9 +214,12 @@ const getAskedQuiz = async (req, res)=>{
 
 }
 
+
+
 module.exports= {
     getQuizes,
     addQusetion,
+    searchQuiz,
     deleteQuestions,
     getOpinions,
     addAnswers,
