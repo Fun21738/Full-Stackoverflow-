@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch } from "react-redux";
+import "./Home.css";
 import { useState } from "react";
 import { createNewPost } from "../features/Posts/AnswerSlice";
 import { fetchPosts } from "../features/Posts/postSlice";
@@ -15,21 +16,7 @@ const PostAnswer = ({onClose, post, posts})=> {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
-  
-  // const onSubmit=(e)=>{
-  //   console.log('submitting...')
-  //   e.preventDefault()
-  //   const id= Math.ceil(Math.random()*1000000)
-  //   const newPost={...AnswerForm, id}
-  //   const newQuestion = {
-  //     ...post,
-  //     answers: [...post.answers, newPost.answer],
-  //   }
-  //   dispatch(createNewPost({posts, newQuestion}))
-  //   dispatch(fetchPosts());
-
-  //   // dispatch(fetchPosts())
-  // }
+ 
 
   const handleSubmit = () => {
     setOpen(false);
@@ -49,12 +36,9 @@ const PostAnswer = ({onClose, post, posts})=> {
   
   if(!open) return <>
     <div>
-      <button className="btn" onClick={()=>setOpen(true)}>post answer</button>
+      <button className="btnn" onClick={()=>setOpen(true)}>post answer</button>
       <button className="btn">delete post</button>
-      <select name="" id="">
-      <option value="asc">most answers</option>
-        <option value="desc">recently answered</option>
-      </select>
+      
     </div>
     
   </>

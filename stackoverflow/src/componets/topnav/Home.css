@@ -3,39 +3,54 @@
  display: flex;
  flex-direction: column;   
  gap: 20px; 
- padding-top: 16px;
+ margin-top: 60px;
  box-shadow: 1px 1px 1px 2px rgba(0, 0, 0, 0.2);
- height: 75%;
+min-height: 100%;
  width: 160px;
- }
+ position: fixed;
+
+}
  .hp{
     text-decoration: none;
     color: rgb(0, 0, 255);
  }
+.hp:hover{
+   color: red;
+}
+
  .bp{
     display: flex;
+    /* overflow: scroll; */
  }
  .main{
     justify-content: center;
     width: 100%;
-    height: 100%px;
-    margin: 4px;
-    overflow: scroll;
-    scroll-behavior: auto;
+    height: auto;
+    margin: auto ;
+   margin-top: 60px;
+   margin-left: 80px;
+
+    
+    overflow-y:auto;
+    
  }
 .postee{
     margin-left: 38%;
     
 }
 .posty{
-   margin-left: 38%;
-   color: rgba(0, 0, 255, 0.733);
+   margin: auto;
+   text-align: center;
+   color: rgba(28, 255, 149, 0.733);
+   overflow-y: auto;
+  
 }
 
 .mag{
     border: 1px solid red;
-    background-color: #f0f0f0cc;;
-    margin-top: 16px;
+    background-color: #f0f0f0cc;
+    /* overflow: auto; */
+    margin-top: 24px;
     margin-left: 170px;
     width: 70%;
 }
@@ -51,12 +66,28 @@
     }
 .lab{
    display: flex;
-   gap: 660px;
+   flex-direction: row;
+   /* gap: 500px; */
 }
 .ico{
-   gap: 4px;
+   gap: 16px;
+   display: flex;
+   padding-top: 12px;
 }
-.icon{
-   gap: 8px;
-   border: 1px solid red;
+
+.other{
+   margin-top: 48px;
+}
+.answ{
+   color: blue;
+   padding: 8px;
+   text-decoration: underline;
+}
+.btnn{
+  margin-left: 72%;
+width: 120px;
+}
+.input{
+   /* margin-left: 500px; */
+   align-items: flex-end;
 }
