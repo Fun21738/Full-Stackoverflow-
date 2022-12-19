@@ -1,12 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .cont{
     justify-content: center;
     align-items: center;
-    width: 45%;
-    height: 55%;
+    /* width: 4%; */
+    /* height: 55%; */
     /* padding: 100px; */
-    padding-left: 32%;
-    padding-top: 8%;
-    
+    /* padding-left: 32%; */
+    padding-top: 8;
+   
 }
 .inn{
     display: flex;
@@ -41,4 +46,18 @@ button{
 }
 .bt{
     margin-top: 16px;
+}
+.im{
+width: 450px;
+height: 400px;
+}
+form{
+    /* margin-left: -100px; */
+    justify-content: left;
+    padding: 24px;
+    /* border: 1px solid red; */
+    /* width: 1200px; */
+    height: 400px;
+    /* display: flex; */
+    flex-direction: row;
 }

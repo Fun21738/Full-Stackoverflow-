@@ -1,32 +1,44 @@
 import React from 'react';
 import Navbar from "./Navbar";
 import "./Login.css"
-import {useState,useEffect} from 'react';
+import { useDispatch } from "react-redux";
+import {useState} from 'react';
+import sign from "../../images/sign.jpg";
+import { SigupClient }from "../features/Posts/Register"
+
+// const DEFAULT_FORM={
+//   Clients: ""
+// }
+
 
 function Sign() {
-  const initialValue = {username:"",email:"",password:"",confrimPassword:""}
+  const initialValue = {username:"",email:"",password:"",confirm:""}
   const [formValues,setFormValues] =useState(initialValue)
   const [formErrors,setFormErros] =useState({})
   const [isSubmit, setIsSubmit] =useState(false);
+  const dispatch = useDispatch();
 
 const handleChange =(e)=>{
   // console.log(e.target);
   const {name,value} =e.target;
   setFormValues({...formValues ,[name]:value});
-  console.log(formValues);
+  
+
 }
 
 const handleSubmit = (e)=>{
 e.preventDefault();
 setFormErros(validate(formValues));
 setIsSubmit(true);
+dispatch( SigupClient(formValues))
 }
-useEffect(()=>{
-  console.log(formErrors);
-if (Object.keys(formErrors).length===0 && isSubmit){
-  console.log(formValues);
-}
-},[formErrors])
+// useEffect(()=>{
+//   console.log(formErrors);
+// if (Object.keys(formErrors).length===0 && isSubmit){
+//   console.log(formValues);
+//   }
+// },[])
+
 
 const validate = (values)=>{
   const error={}
@@ -51,8 +63,8 @@ const validate = (values)=>{
   }
 
 
-  if(!values.confrimPassword){
-    error.confrimPassword ="confimation password is required !";
+  if(!values.confirm){
+    error.confirm ="confimation password is required !";
   }
   return error;
 };
@@ -65,10 +77,13 @@ const validate = (values)=>{
         <div className='cont'>
             <h3 className='hd'>sign up for you better ways of in solving code problems</h3>
             <div className='inn'>
+           
            { Object.keys(formErrors).length===0 && isSubmit ?(<div className='ui_massage_success'>Signed in successfully</div>):(
             <div className='ui_massage_success>not successful'></div>
            )}
               <form onSubmit={handleSubmit}> 
+              <div className="">
+                <img src={sign} alt="" className='im'  />
               
               <input type="text"  placeholder='username' className='one'
               name='username'
@@ -92,13 +107,14 @@ const validate = (values)=>{
                  <p>{formErrors.password}</p>
 
                 <input type="password" placeholder='confirm password' className='one'
-                 name='confrimPassword'
-                 value={formValues.confrimPassword}
+                 name='confirm'
+                 value={formValues.confirm}
                  onChange={handleChange}
                  />
-                  <p>{formErrors.confrimPassword}</p>
+                  <p>{formErrors.confirm}</p>
 
                 <button className='bt'>Enter</button>
+                </div>
               </form>
 
             </div>
