@@ -1,8 +1,8 @@
 const joi =require('joi')
 
 const LoginSchema = joi.object({
-    username: joi.string().required(),
+    // usernam: joi.string().required(),
     email: joi.string().email().required(),
-    password : joi.string().required(),
+    passwor : joi.string().required(),
 })
 module.exports= LoginSchema
