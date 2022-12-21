@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Navbar from "./Navbar";
 import "./Home.css";
 import { useSelector } from "react-redux";
@@ -10,79 +10,38 @@ import PostAnswer from "./PostAnswer";
 import { RiHeart3Line } from "react-icons/ri";
 import { HiThumbDown } from "react-icons/hi";
 // import { FaRegCommentDots } from "react-icons/fa";
-import { fetchPosts } from "../features/Posts/postSlice";
+import { fetchPosts,createNewPost } from "../features/Posts/postSlice";
+// import { createNewAnswer, fetchAnswers } from "../features/Posts/AnswerSlice";
 import PostComments from "./PostComments";
+
 //  import { stringify } from "uuid";
 
 function Home() {
-  const posts = useSelector((state) => state.posts.posts);
-  console.log({ posts });
+  const { Quizes}  = useSelector((state) => state.posts);
+  console.log("ff",Quizes)
+  // console.log( {posts });
   const dispatch = useDispatch();
   const [OpenModal, setOpenModal] = useState(false);
   const [OpenCommentModal, setOpenCommentModal] = useState(false);
-  // const [like,setLike] = useState (false);
-  // const [Dislike,setDislike] = useState (false);
 
-  // const [likeActive,setLikeActive] = useState (false);
-  // const [DislikeActive,setDislikeActive] = useState (false);
+  const Answers = useSelector((state) => state.Answers);
+  console.log(Answers);
+  // console.log(answers);
+  const [checked, setChecked] = useState(false);
 
-  const answers = useSelector((state) => state.posts.posts);
 
-  console.log({ posts });
-  console.log(answers);
-  const [checked, setChecked] = React.useState(false);
-  //   const LikePost = (id) => {
-  //     fetch('/Likes',{
-  //     method :"put",
-  //     headers:{
-  //       "context-type":"application/json",
-  //       "Authorization":"Bearer"+LocalStorage.getItems("jwt")
-  //     },
-  //     body:JSON>stringify({
-  //       postId:id
-  //     }).then(res=>res.json())
-  //     .then(result=>{
-  //         console.log(result);
-  //     })
-  // })
+  useEffect(()=>{
+        dispatch(fetchPosts())
+   }, [dispatch])
 
-  // const dislikePost = (id) => {
-  //   fetch('/Dislikes',{
-  //   method :"put",
-  //   headers:{
-  //     "context-type":"application/json",
-  //     "Authorization":"Bearer"+LocalStorage.getItems("jwt")
-  //   },
-  //   body:JSON>stringify({
-  //     postId:id
-  //   }).then(res=>res.json())
-  //   .then(result=>{
-  //       console.log(result);
-  //   })
-  // })
-  //
-  //   // const { like } = useSelector((state) => state.like)
 
-  // const handleCommentPost = (id) => {
-  //   dispatch(CommentPost(id));
-  // };
 
-  // const handleDisikePost = (id) => {
-  //   dispatch(dislikePostAction(id));
-  // };
 
-  // const handleLikePost = (id) => {
-  //   dispatch(likePost(id));
-  // };
-
-  useEffect(() => {
-    dispatch(fetchPosts());
-  }, [dispatch]);
-
+  
   return (
     <div>
       <Navbar />
-      <div className="bp">
+      {<div className="bp">
         <div className="mac">
           <h3 className="other">Others</h3>
           <Link to="/EveraskedQ" className="hp">
@@ -96,9 +55,12 @@ function Home() {
         </div>
 
         <div className="main">
+          <div>
           <h3 className="posty">Posted questions and answers !! </h3>
+          </div>
+          
 
-          {posts?.map((post) => {
+          {Quizes?.map((post) => {
             return (
               <div className="mag" key={post.id}>
                 <div className="heady">
@@ -108,19 +70,19 @@ function Home() {
                   </p>
                 </div>
 
-                {post.quiz}
+                {post.questions}
                 <div className="anz">
                   <div className="mode">
                     <PostAnswer
                       post={post}
-                      posts={posts}
+                      posts={Quizes}
                       open={OpenModal}
                       onClose={() => setOpenModal(false)}
                     />
                   </div>
 
                   <div className="ans">
-                    {post.answers?.map((answers) => {
+                    {Answers.answers?.map((answers) => {
                       return (
                         <div className="ans" key={answers.id}>
                           <p className="answ">answer</p>
@@ -129,17 +91,18 @@ function Home() {
                           <div className="lab">
                             <div className="ico">
                               <RiHeart3Line className="icon" />
-                              {/* onClick={()=>{Likepost(post.id)}} */}
+                             
                               {post?.like?.length}
                               <HiThumbDown className="icon" />
                               <span>{11}</span>
                               <PostComments
                                 className="icon"
                                 post={post}
-                                posts={posts}
+                                posts={Answers}
                                 open={OpenCommentModal}
                                 onClose={() => setOpenCommentModal(false)}
                               />
+                            
                               <label>
                                 <input
                                   className="input"
@@ -170,7 +133,7 @@ function Home() {
             );
           })}
         </div>
-      </div>
+        </div>}
     </div>
   );
 }

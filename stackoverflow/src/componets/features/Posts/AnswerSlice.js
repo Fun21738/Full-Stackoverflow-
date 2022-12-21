@@ -6,50 +6,44 @@ const initialState = {
 };
 
 
-const url="https://stack-28e5a-default-rtdb.firebaseio.com/stack.json"
+const url="http://localhost:4000/Answers/addAns"
 
-export const createNewPost = createAsyncThunk('posts/createNewPost',
-    async ({posts, newQuestion}, { dispatch }) => {        
+export const createNewAnswer = createAsyncThunk('postAnswers/createNewAnswer',
+    async (data,thunkAPI) => {
+      console.log(data)        
         try {
-          await axios.put(url, {});
-          let res = null;
-            posts.forEach(async(item) => {
-              if (item.id === newQuestion.id){
-                res = await axios.post(url, newQuestion);
-              }
-              else{
-                await axios.post(url, item);
-              }
-            });
-            console.log(res.data)
-            dispatch(fetchPosts())
-            return res.data;
+          const Token = localStorage.getItem("Clients")
+          
+          const response = await axios.post(url, data, {
+            headers:{
+              Authorization:`Bearer ${Token}`
+            }
+          }).then (data=>data.json());
+             console.log(data)
+            
+             console.log(response);
+            return {}
         } catch (error) {
-            console.log(error)
+            thunkAPI.rejectWithValue({
+              console:error.message
+            })
         }
     }
 );
 
 
 
-export const fetchPosts = createAsyncThunk('posts/fetchPosts', 
-    async () => {
+export const fetchAnswers = createAsyncThunk('posts/fetchPosts', 
+    async (answer,thunkAPI) => {
         try {
-            const response = await axios.get(url);
-            console.log({response})
-            const dataArray=[]
-            for(let key in response.data){
-
-                dataArray.push({
-        
-                  id: key,
-                  postQuestion: response.data[key].quiz,      
-                });
-        
-              }
-            return dataArray
+            const res = await axios.get('http://localhost:4000/Answers/answers');
+            
+            // const answer=res.data;
+            return res.data 
         } catch (error) {
-            console.log(error)
+          thunkAPI.rejectWithValue({
+            error:error.message
+          })
         }
     }
 )
@@ -60,14 +54,27 @@ export const answerSlice = createSlice({
     name: 'postAnswers',
     initialState,
     reducers: {},
+
     extraReducers: (builder) => {
-        builder.addCase(createNewPost.fulfilled, (state, action) => {
-        //     state.posts.push(action.payload);
-        state.posts=action.payload.Answers
+        builder.addCase(createNewAnswer.fulfilled, (state, action) => {
+         state.loading=false
          });
-        builder.addCase(fetchPosts.fulfilled, (state, action) => {
-            state.posts = action.payload
-        })
+
+         builder.addCase(createNewAnswer.pending, (state, action) => {
+          
+          state.loading =true
+          state.Answers =[]
+        });
+
+        builder.addCase(fetchAnswers.fulfilled, (state, action) => {
+           state.Answers=action.payload.Answers
+           state.loading=false
+           console.log(action.payload.Answers);
+           
+        });
+        builder.addCase(fetchAnswers.pending,(state,action)=>{
+          state.loading=true
+         })
     }
 });
 

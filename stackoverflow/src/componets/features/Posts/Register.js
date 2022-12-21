@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 // import { Await } from "react-router-dom";
-import { loginUser } from "../../../Services/user";
+// import { loginUser } from "../../../Services/user";
 
 
 const initialState = {
@@ -16,9 +16,7 @@ export const SigupClient = createAsyncThunk('AddnewUser',
     async (newClient,thunkAPI) => {
                 try {
             // console.log(res);
-            await axios
-            .post(SignupUrl, newClient)
-            .then((data)=> console.log(data))
+            await axios.post(SignupUrl, newClient).then((data)=> console.log(data))
              return{ newClient }
         } catch (error) {
             thunkAPI.rejectWithValue({
@@ -28,38 +26,24 @@ export const SigupClient = createAsyncThunk('AddnewUser',
     }
 );
 
-// export const LoginClient = createAsyncThunk(
-//     "Login Clients",
-//     async (newClient,thunkAPI) =>{
-//         try{
-//             console.log("fgdgdgf", {newClient});
-
-//             const response = await loginUser(newClient)
-//             console.log(response);
-//             return{Clients:response}
-//          } catch (error){
-//             console.log(error);
-//             thunkAPI.rejectWithValue({
-//                 error:error.message
-//             })
-//          }
-//         }
-// )
-
 export const LoginClient = createAsyncThunk('user/login',
-    async (values, { rejectWithValue }) => {
-        try {
-            const response = await axios.post('http://localhost:4000/Clients/Login', values);
+    async (newClient, thunkAPI) =>{
+        // console.log(newClient)
+    // console.log(newClient);
+    try {
+      const response=  await (await axios.post ( "http://localhost:4000/Clients/Login",newClient))
 
-            console.log(response)
-            return response.data
-        } catch (error) {
-            console.log(error.response)
-            return rejectWithValue(error.response.data.message)
-        }
+        localStorage.setItem("Clients", response.data.token);
+      console.log(response.data.token)
+      return response.data
+    } catch (error) {
+            thunkAPI.rejectWithValue({
+                error:error.message
+    })
     }
-)
-
+}
+);
+    
 export const clientsSlice = createSlice({
     name: 'Clients',
     initialState,
@@ -74,7 +58,8 @@ export const clientsSlice = createSlice({
        });
 
         builder.addCase(LoginClient.fulfilled, (state, action) => {
-            state.Clients=action.payload.Clients
+            state.Clients=action.payload
+            // console.log(action.payload);
             state.loading=false
         });
         builder.addCase(LoginClient.pending, (state, action) => {

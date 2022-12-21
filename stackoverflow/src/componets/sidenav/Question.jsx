@@ -5,39 +5,33 @@ import "./Sidenav.css";
 // import { useSelector } from "react-redux";
 import { createNewPost } from "../features/Posts/postSlice";
 import { useState } from "react";
+// import { useParams } from "react-router-dom";
 
-const DEFAULT_FORM={
-  quiz: ""
-}
+
+// const DEFAULT_FORM={
+//   quiz: ""
+// }
 
 
 const Question = () => {
-  const [QuestionForm, setQuestionForm] = useState(DEFAULT_FORM);
+ 
+  // const initialValue = {quiz:""}
+  const [QuestionForm, setQuestionForm] = useState("");
   const dispatch = useDispatch();
+  // const {quizId} = useParams()
 
-//   const handleAddPost = () => {
-//     // const id = Math.floor(Math.random() * 136736723);
-//     // dispatch(createPostAction({ Question, id, likes: 0 }));
-//     dispatch(createNewPost({ }))
-
-//     // setQuestion("");
-    
-// };
-const answers=["sample answer"]
+// const answers=["sample answer"]
 
 const handleAddPost=(e)=>{
+  // const newQuestion= {...QuestionForm}
   e.preventDefault()
-  const id= Math.ceil(Math.random()*1000000)
-  // const newPost={...QuestionForm, id, answers: []};
-  const { quiz } = QuestionForm;
-  // console.log(newPost)
-  dispatch(createNewPost({ id, quiz, answers}))
-  // dispatch(fetchPosts())
+  console.log(QuestionForm);
+   dispatch(createNewPost({questions:QuestionForm}))
+   setQuestionForm("")
 }
 
-
 const HandlerChange=(e)=>{
-  setQuestionForm((prev)=>({...prev, [e.target.name]: e.target.value}))
+  setQuestionForm(e.target.value)
 }
 
   return (
@@ -48,7 +42,7 @@ const HandlerChange=(e)=>{
         <textarea name="quiz" id="" cols="30" 
           className="tex"
           placeholder="please input your question here"
-          value={QuestionForm.quiz}
+          value={QuestionForm}
           onChange={HandlerChange}
           // onChange={(e) =>
           //    setQuestion(e.target.value)}
@@ -62,3 +56,5 @@ const HandlerChange=(e)=>{
 };
 
 export default Question;
+
+

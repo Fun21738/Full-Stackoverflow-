@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import "./Login.css"
 import { useDispatch } from "react-redux";
 import {useState} from 'react';
-import sign from "../../images/sign.jpg";
+// import sign from "../../images/sign.jpg";
 import { SigupClient }from "../features/Posts/Register"
 
 // const DEFAULT_FORM={
@@ -32,12 +32,6 @@ setFormErros(validate(formValues));
 setIsSubmit(true);
 dispatch( SigupClient(formValues))
 }
-// useEffect(()=>{
-//   console.log(formErrors);
-// if (Object.keys(formErrors).length===0 && isSubmit){
-//   console.log(formValues);
-//   }
-// },[])
 
 
 const validate = (values)=>{
@@ -83,7 +77,7 @@ const validate = (values)=>{
            )}
               <form onSubmit={handleSubmit}> 
               <div className="">
-                <img src={sign} alt="" className='im'  />
+                {/* <img src={sign} alt="" className='im'  /> */}
               
               <input type="text"  placeholder='username' className='one'
               name='username'

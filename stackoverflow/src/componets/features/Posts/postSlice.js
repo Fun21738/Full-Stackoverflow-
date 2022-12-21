@@ -1,73 +1,100 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+// import { PostQuestions,deleteQuestion,getQuestion } from "../../../Services/questions";
 
 const initialState = {
-    posts: [
-        // {
-        //     name: 'Jose'
-        // },
-        // {
-        //     name: 'Jose2'
-        // },
-        // {
-        //     name: 'Jose3'
-        // },
-    ],
-    // answer: {},
+    Quizes : [],
+    loading:false
 };
-
-
-const url="https://stack-28e5a-default-rtdb.firebaseio.com/stack.json"
+const url= `http://localhost:4000/questions/addquiz`
+// const save=     sessionStorage.getItem("Clients".token);
 
 export const createNewPost = createAsyncThunk('posts/createNewPost',
-    async (newPost, { dispatch }) => {
-        console.log('new', newPost);
+    async (data,thunkAPI) => {
+        
         try {
-            // console.log(res);
-            await axios.post("https://stack-28e5a-default-rtdb.firebaseio.com/stack.json", newPost)
-            // dispatch(fetchPosts())
-            // return res.data
+            // console.log(data);
+            const Token = localStorage.getItem("Clients");
+            // console.log("jose",Token)
+          const response=  await axios.post(url,data,{
+            headers:{
+                Authorization: `Bearer ${Token}`
+            }
+          }).then(data=>data.json());
+          console.log(data);
+ 
+            // const response=await PostQuestions(question)
+           console.log(response);
+          return{}
         } catch (error) {
-            console.log(error)
+            thunkAPI.rejectWithValue({
+                error:error.message
+            })
         }
     }
 );
 
+
+
+
+
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', 
-    async () => {
+    async (question,thunkAPI) => {
         try {
-            const response = await axios.get(url);
-            console.log({response});
-            const dataArray=[]
-            for(let key in response.data){
-                console.log({key});
-                dataArray.push({
-        
-                  id: response.data[key].id,
-                  quiz: response.data[key].quiz,
-                  answers: response.data[key].answers      
-                });
-        
-              }
-            return dataArray
+            const res= await axios.get('http://localhost:4000/questions/quiz');
+            
+            // const  questions  = res.data;
+            // console.log(res.data);
+         return res.data
+       } catch (error) {
+        thunkAPI.rejectWithValue({
+                error:error.message
+            })
+        }
+    }
+);
+
+export const deleteQuestionAction= createAsyncThunk(
+    "delete/question-one",
+    async(question, thunkAPI)=>{
+        try {
+            const response = await (question)
+            return response
         } catch (error) {
-            console.log(error)
+            thunkAPI.rejectWithValue({
+                error: error.message
+            })
         }
     }
 )
 
+
 export const postSlice = createSlice({
-    name: 'postQuestionts',
+    name: 'Question',
     initialState,
     reducers: {},
+
     extraReducers: (builder) => {
         builder.addCase(createNewPost.fulfilled, (state, action) => {
-            // state.posts.push(action.payload);
-        // state.posts=action.payload.posts
+            // state.Quizes = action.payload
+            // console.log(action.payload);
+            state.loading =false
          });
-        builder.addCase(fetchPosts.fulfilled, (state, action) => {
-            state.posts = action.payload
-        });
+         builder.addCase(createNewPost.pending, (state, action) => {
+            state.loading =true
+            
+          });
+
+          builder.addCase(fetchPosts.pending,(state,action)=>{
+            
+            state.loading=true
+           }) 
+       builder.addCase(fetchPosts.fulfilled, (state, action) => {
+        // console.log(action.payload.Quizes);
+          state.Quizes = action.payload.questions
+          state.loading =false
+         
+       });
        
     }
 });

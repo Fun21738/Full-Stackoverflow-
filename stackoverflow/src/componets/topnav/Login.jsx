@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { LoginClient } from "../features/Posts/Register";
 
+
 function Login() {
   const initialValue = { email: "", passwor: "" };
   const [formValues, setFormValues] = useState(initialValue);
@@ -16,10 +17,12 @@ function Login() {
     // console.log(e.target);
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-    console.log(formValues);
+ 
   };
+  console.log(formValues);
 
   const handleSubmit = (e) => {
+    console.log(formValues);
     e.preventDefault();
     setFormErros(validate(formValues));
     setIsSubmit(true);
