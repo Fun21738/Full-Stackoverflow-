@@ -29,16 +29,16 @@ const getQuizes = async (req, res)=>{
 
 const addQusetion = async (req, res)=>{
     try {
-       const {Clientsid,questions} =req.body
-       const questionsid=v4
-
-       const id =questionsid()
+       const {questions} =req.body
+       const questionsid=v4()
+        // console.log(questionsid);
+       const {id}= req.info
        const pool= await mssql.connect (sqlConfig)
     //    let questionsResult= await (
       let questionResult= await (await pool 
        .request()
-       .input('id',mssql.VarChar,id)
-       .input('Clientsid',mssql.VarChar,Clientsid)
+       .input('id',mssql.VarChar,questionsid)
+       .input('Clientsid',mssql.VarChar,id)
        .input('questions',mssql.VarChar,questions)
        .execute ('addQuestion')).recordset
     //    ).recordset
@@ -102,6 +102,7 @@ const getOpinions= async (req, res)=>{
         
         const pool= await mssql.connect(sqlConfig)
         const response= await pool.request().execute ("getOpinions")
+        
         const Answers =response.recordset
         console.log(Answers);
 
@@ -119,18 +120,18 @@ const getOpinions= async (req, res)=>{
 const addAnswers= async (req, res)=>{
     try {
         const { Quizesid,Clientsid, comments, likes, dislikes}=req.body
-        const answerId= v4
+        const commentsid= v4()
         //create a connection
-        const id= answerId()
-        const pool= await mssql.connect(sqlConfig)
+       const pool= await mssql.connect(sqlConfig)
         
+       const { id } = req.info;
 
          await pool
         .request()
-        .input('id', mssql.VarChar, id)
+        .input('id', mssql.VarChar, commentsid)
+        .input('Clientsid',mssql.VarChar,id)
         .input('Quizesid', mssql.VarChar, Quizesid)
-        .input('Clientsid', mssql.VarChar, Clientsid)
-        .input('comments', mssql.VarChar, comments)
+         .input('comments', mssql.VarChar, comments)
         .input('likes', mssql.Int, likes)
         .input('dislikes', mssql.Int, dislikes)
         .execute('addAns').rowsaffected

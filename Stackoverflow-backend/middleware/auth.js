@@ -15,7 +15,7 @@ const auth= (req, res, next)=>{
         const {id, email}= jwt.verify(token, "SECRET");
        
         
-        req.body = {...req.body,id, email}
+        req.info = {...req.body,id, email}
 
         next()
 

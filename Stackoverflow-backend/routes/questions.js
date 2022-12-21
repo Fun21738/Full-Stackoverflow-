@@ -5,7 +5,7 @@ const auth = require('../middleware/auth')
 
 const router= express.Router()
 
-router.get("/quiz", auth, getQuizes)
+router.get("/quiz",  getQuizes)
 router.get("/search", searchQuiz)
 router.delete('/:id', auth,deleteQuestions)
 router.post("/addquiz", auth,addQusetion)
