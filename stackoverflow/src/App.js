@@ -8,7 +8,7 @@ import Sign from "./componets/topnav/Sign";
 import Question from "./componets/sidenav/Question";
 
 function App() {
-  console.log('home')
+  console.log('Home')
   return (
     <div className="App">
           <BrowserRouter>

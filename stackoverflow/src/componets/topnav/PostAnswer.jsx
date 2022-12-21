@@ -1,60 +1,50 @@
 import React from 'react'
 import { useDispatch } from "react-redux";
+import  { useEffect } from "react";
+import "./Home.css";
 import { useState } from "react";
-import { createNewPost } from "../features/Posts/AnswerSlice";
-import { fetchPosts } from "../features/Posts/postSlice";
+import { createNewAnswer } from "../features/Posts/AnswerSlice";
+import { fetchAnswers } from "../features/Posts/AnswerSlice"; 
+// import { useEffect } from 'react';
 
-const PostAnswer = ({onClose, post, posts})=> {
-  
-  
-  const DEFAULT_INPUT={
-    answer: ""
-  }
-  
-  const [AnswerForm, setAnswerForm] = useState(DEFAULT_INPUT);
+const PostAnswer = (onClose, post, posts)=> {
+  console.log(post.id)
+        
+  const [AnswerForm, setAnswerForm] = useState("");
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+ 
 
-  
-  // const onSubmit=(e)=>{
-  //   console.log('submitting...')
-  //   e.preventDefault()
-  //   const id= Math.ceil(Math.random()*1000000)
-  //   const newPost={...AnswerForm, id}
-  //   const newQuestion = {
-  //     ...post,
-  //     answers: [...post.answers, newPost.answer],
-  //   }
-  //   dispatch(createNewPost({posts, newQuestion}))
-  //   dispatch(fetchPosts());
-
-  //   // dispatch(fetchPosts())
-  // }
-
-  const handleSubmit = () => {
-    setOpen(false);
-    const id= Math.ceil(Math.random()*1000000)
-    const newPost={...AnswerForm, id}
-    const newQuestion = {
-      ...post,
-      answers: [...post.answers, newPost.answer],
-    }
-    dispatch(createNewPost({posts, newQuestion}))
-    dispatch(fetchPosts());
+  const handleSubmit = (e) => {
+         e.preventDefault()
+      dispatch(createNewAnswer({
+        Quizesid: post.id,
+        comments:AnswerForm,
+        likes: 14,
+        dislikes: 3
+      }))
+    
+    //   setOpen(false);
+    // dispatch(fetchPosts());
+    // setAnswerForm("")
   }
+  useEffect(()=>{
+    if(post.id){
+      dispatch(fetchAnswers(post.id))
+    }
+  //
+  },[dispatch,post.id])
   
   const HandlerChange=(e)=>{
-    setAnswerForm((prev)=>({...prev, [e.target.name]: e.target.value}))
+    setAnswerForm(e.target.value)
+    // setAnswerForm((prev)=>({...prev, [e.target.name]: e.target.value}))
   }
   
   if(!open) return <>
     <div>
-      <button className="btn" onClick={()=>setOpen(true)}>post answer</button>
+      <button className="btnn" onClick={()=>setOpen(true)}>post answer</button>
       <button className="btn">delete post</button>
-      <select name="" id="">
-      <option value="asc">most answers</option>
-        <option value="desc">recently answered</option>
-      </select>
+      
     </div>
     
   </>
@@ -70,7 +60,7 @@ const PostAnswer = ({onClose, post, posts})=> {
       <p onClick={() => {setOpen(false)}}>X</p>
       <h4>posted answer</h4>
         <form  className="modal-form">
-          <textarea name="answer" id="" cols="30" rows="10" placeholder='post your answer here' value={AnswerForm.answer} onChange={HandlerChange} >
+          <textarea name="answer" id="" cols="30" rows="10" placeholder='post your answer here' value={AnswerForm} onChange={HandlerChange} >
         </textarea>
         <button className='btn'onClick={handleSubmit} >Add</button>
 

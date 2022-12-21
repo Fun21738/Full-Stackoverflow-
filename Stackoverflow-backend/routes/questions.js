@@ -1,12 +1,14 @@
 const express= require('express')
-const { getQuizes, deleteQuestions, addQusetion } = require('../controls/control')
+const { getQuizes, deleteQuestions, addQusetion, searchQuiz } = require('../controls/control')
+const auth = require('../middleware/auth')
 
 
 const router= express.Router()
 
-router.get("/quiz", getQuizes)
-router.delete('/:id', deleteQuestions)
-router.post("/addquiz", addQusetion)
+router.get("/quiz", auth, getQuizes)
+router.get("/search", searchQuiz)
+router.delete('/:id', auth,deleteQuestions)
+router.post("/addquiz", auth,addQusetion)
 
 
 module.exports = router

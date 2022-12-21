@@ -1,10 +1,11 @@
 const express= require('express')
 const { addAnswers, getOpinions } = require('../controls/control')
+const auth = require('../middleware/auth')
 
 const router= express.Router()
 
 router.get("/answers",getOpinions)
-router.post("/addAns", addAnswers)
+router.post("/addAns",auth, addAnswers)
 
 
 

@@ -5,3 +5,4 @@ insert into Quizes(id,Clientsid,questions)
 values (@id,@Clientsid,@questions);
 
 end
+
