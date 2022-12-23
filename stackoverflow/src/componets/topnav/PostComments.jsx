@@ -2,37 +2,35 @@ import React from 'react'
 import { useDispatch } from "react-redux";
 import "./Home.css";
 import { useState } from "react";
-import { createNewPost } from "../features/Posts/Comments";
-import { fetchPosts } from "../features/Posts/postSlice";
+import { createNewComments  } from "../features/Posts/Comments";
 import { FaRegCommentDots } from "react-icons/fa";
 
-const PostComments = ({onClose, post, posts})=> {
+const PostComments = ({onClose, answer, posts})=> {
+  console.log(answer.id)
   
   
-  const DEFAULT_INPUT={
-    Comment: ""
-  }
-  
-  const [CommentForm, setCommentForm] = useState(DEFAULT_INPUT);
+  // const DEFAULT_INPUT={
+  //   Comment: ""
+  // }
+  const [CommentForm,setCommentForm] = useState ("");
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
  
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     setOpen(false);
-    const id= Math.ceil(Math.random()*1000000)
-    const newPost={...CommentForm, id}
-    const newAnswers = {
-      ...post,
-      Comment: [...post.Comment, newPost.Comment],
-    }
-    dispatch(createNewPost({posts, newAnswers}))
-    dispatch(fetchPosts());
+  e.preventDefault()
+    dispatch(createNewComments ({
+      Opinionsid: answer.id,
+      reply:CommentForm
+    }))
+        
   }
   
   const HandlerChange=(e)=>{
-    setCommentForm((prev)=>({...prev, [e.target.name]: e.target.value}))
+    setCommentForm(e.target.value)
+    // setCommentForm((prev)=>({...prev, [e.target.name]: e.target.value}))
   }
   
   if(!open) return (
@@ -53,7 +51,7 @@ const PostComments = ({onClose, post, posts})=> {
       <p onClick={() => {setOpen(false)}}>X</p>
       <h4>posted Comment</h4>
         <form  className="modal-form">
-          <textarea name="Comment" id="" cols="30" rows="10" placeholder='post your answer here' value={CommentForm.answer} onChange={HandlerChange} >
+          <textarea name="Comment" id="" cols="30" rows="10" placeholder='post your answer here' value={CommentForm} onChange={HandlerChange} >
         </textarea>
         <button className='btn'onClick={handleSubmit} >Add</button>
 

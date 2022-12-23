@@ -10,29 +10,43 @@ import PostAnswer from "./PostAnswer";
 import { RiHeart3Line } from "react-icons/ri";
 import { HiThumbDown } from "react-icons/hi";
 // import { FaRegCommentDots } from "react-icons/fa";
-import { fetchPosts,createNewPost } from "../features/Posts/postSlice";
+import { fetchPosts } from "../features/Posts/postSlice";
 // import { createNewAnswer, fetchAnswers } from "../features/Posts/AnswerSlice";
 import PostComments from "./PostComments";
+import { fetchAnswers } from "../features/Posts/AnswerSlice"; 
+import QuestionCard from "../Questions/QuestionCard";
 
 //  import { stringify } from "uuid";
 
 function Home() {
   const { Quizes}  = useSelector((state) => state.posts);
-  console.log("ff",Quizes)
+  console.log("",Quizes)
   // console.log( {posts });
   const dispatch = useDispatch();
   const [OpenModal, setOpenModal] = useState(false);
   const [OpenCommentModal, setOpenCommentModal] = useState(false);
+  const [selectedQuizes,setSelectedQuiz] = useState('');
+  const [show, setShow] = useState(false);
+  
+  // const handleAnswers = (id) => {
+  //   setShow(!show);
+  //   dispatch(fetchAnswers(id));
+  //   setSelectedQuiz(id);
+  // }
 
   const Answers = useSelector((state) => state.Answers);
-  console.log(Answers);
+  // console.log(Answers);
   // console.log(answers);
-  const [checked, setChecked] = useState(false);
+  // const [checked, setChecked] = useState(false);
 
 
   useEffect(()=>{
         dispatch(fetchPosts())
    }, [dispatch])
+
+  //  useEffect(() => {
+  //   if (selectedQuizes )
+  //  })
 
 
 
@@ -61,75 +75,11 @@ function Home() {
           
 
           {Quizes?.map((post) => {
+            console.log(post)
             return (
-              <div className="mag" key={post.id}>
-                <div className="heady">
-                  <h3 className="postee">posted question </h3>
-                  <p className="posty">
-                    answers <span>{post?.answers?.length}</span>
-                  </p>
-                </div>
-
-                {post.questions}
-                <div className="anz">
-                  <div className="mode">
-                    <PostAnswer
-                      post={post}
-                      posts={Quizes}
-                      open={OpenModal}
-                      onClose={() => setOpenModal(false)}
-                    />
-                  </div>
-
-                  <div className="ans">
-                    {Answers.answers?.map((answers) => {
-                      return (
-                        <div className="ans" key={answers.id}>
-                          <p className="answ">answer</p>
-                          <h5>{answers}</h5>
-
-                          <div className="lab">
-                            <div className="ico">
-                              <RiHeart3Line className="icon" />
-                             
-                              {post?.like?.length}
-                              <HiThumbDown className="icon" />
-                              <span>{11}</span>
-                              <PostComments
-                                className="icon"
-                                post={post}
-                                posts={Answers}
-                                open={OpenCommentModal}
-                                onClose={() => setOpenCommentModal(false)}
-                              />
-                            
-                              <label>
-                                <input
-                                  className="input"
-                                  type="checkbox"
-                                  defaultChecked={checked}
-                                  onChange={() => setChecked(!checked)}
-                                />
-                                Check Me!
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                    <div className="comments">
-                      {post.comments?.map((comments) => {
-                        return (
-                          <div className="ans" key={comments.id}>
-                            hello
-                            <h5>{comments}</h5>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              // <div>Testing</div>
+              <QuestionCard post={post} />
+              
             );
           })}
         </div>

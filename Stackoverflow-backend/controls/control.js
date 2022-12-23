@@ -99,16 +99,22 @@ const deleteQuestions= async (req, res)=>{
 
 const getOpinions= async (req, res)=>{
     try {
-        
+        const { Quizesid } = req.params;
+
         const pool= await mssql.connect(sqlConfig)
-        const response= await pool.request().execute ("getOpinions")
+        const response= await pool.request().input("Quizesid", Quizesid).execute ("getOpinions")
         
         const Answers =response.recordset
         console.log(Answers);
 
         if (Answers.length){
             return res.status(200).json({Answers})
-        }       
+        }  else {
+            return res.status(404).json({ 
+                message: 'No data found',
+                Answers: []
+            })
+        }     
    } catch (error) {
     res.status(404).json({
         message: "answers not found"
@@ -147,19 +153,20 @@ const addAnswers= async (req, res)=>{
 
 const addComments=  async(req, res)=>{
     try {
-        const {Clientsid,Opinionsid,Quizesid,reply} = req.body
-        const replyid=v4
+        const { Opinionsid,reply } = req.body
+        const replyid=v4()
+
+        const { id } = req.info;
 
         console.log(req.body);
-        const id= replyid()
+        // const id= replyid()
         const pool =await mssql.connect (sqlConfig)
 
          await pool
         .request()
-        .input ('id',mssql.VarChar,id)
-        .input ('Clientsid',mssql.VarChar,Clientsid)
+        .input ('id',mssql.VarChar,replyid)
+        .input ('Clientsid',mssql.VarChar,id)
         .input ('Opinionsid',mssql.VarChar,Opinionsid)
-        .input ('Quizesid',mssql.VarChar,Quizesid)
         .input ('reply',mssql.VarChar,reply)
         .execute ('addChats')
         

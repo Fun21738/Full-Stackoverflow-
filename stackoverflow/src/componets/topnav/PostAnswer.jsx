@@ -1,18 +1,24 @@
-import React from 'react'
+// import React, { useEffect } from 'react'
 import { useDispatch } from "react-redux";
-import  { useEffect } from "react";
+// import  { useEffect } from "react";
 import "./Home.css";
 import { useState } from "react";
 import { createNewAnswer } from "../features/Posts/AnswerSlice";
-import { fetchAnswers } from "../features/Posts/AnswerSlice"; 
+
 // import { useEffect } from 'react';
 
-const PostAnswer = (onClose, post, posts)=> {
-  console.log(post.id)
-        
+const PostAnswer = ({onClose, post, posts})=> {
+  // const [selectAns, setSelectedAns] = useState('');
+  // const [show, setShow] = useState(false)
   const [AnswerForm, setAnswerForm] = useState("");
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+
+  // useEffect(() => {
+  //   if (show) {
+  //     setSelectedAns(post.id)
+  //   }
+  // }, [show])
  
 
   const handleSubmit = (e) => {
@@ -28,12 +34,19 @@ const PostAnswer = (onClose, post, posts)=> {
     // dispatch(fetchPosts());
     // setAnswerForm("")
   }
-  useEffect(()=>{
-    if(post.id){
-      dispatch(fetchAnswers(post.id))
-    }
-  //
-  },[dispatch,post.id])
+  // useEffect(()=>{
+  //   if(post.id){
+  //     dispatch(fetchAnswers(post.id))
+  //   }
+  // //
+  // },[dispatch,post.id])
+
+
+  // const handleAnswers = () => {
+  //   setShow(!show);
+  // }
+  // console.log(selectAns)
+
   
   const HandlerChange=(e)=>{
     setAnswerForm(e.target.value)
@@ -44,7 +57,7 @@ const PostAnswer = (onClose, post, posts)=> {
     <div>
       <button className="btnn" onClick={()=>setOpen(true)}>post answer</button>
       <button className="btn">delete post</button>
-      
+
     </div>
     
   </>

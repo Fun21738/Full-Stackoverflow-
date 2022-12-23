@@ -5,71 +5,70 @@ const initialState = {
     Comments: [ ]
 };
 
+const url="http://localhost:4000/Comments/comment"
 
-const url="https://stack-28e5a-default-rtdb.firebaseio.com/stack.json"
-
-export const createNewPost = createAsyncThunk('posts/createNewPost',
-    async ({posts, newAnswer}, { dispatch }) => {        
+export const createNewComments = createAsyncThunk('postComments/createNewPost',
+    async (data,thunkAPI) => {   
+      console.log(data);     
         try {
-          await axios.put(url, {});
-          let res = null;
-            posts.forEach(async(item) => {
-              if (item.id === newAnswer.id){
-                res = await axios.post(url, newAnswer);
-              }
-              else{
-                await axios.post(url, item);
-              }
-            });
-            console.log(res.data)
-            dispatch(fetchPosts())
-            return res.data;
+          const Token = localStorage.getItem("Clients");
+        
+          const response = await axios
+          .post (url,data, {
+            headers: {
+              Authorization:`Bearer ${Token}`,
+            },
+          })
+          .then((data)=>data.json());
+            console.log(data)
+            console.log(response);
+              return {}
         } catch (error) {
-            console.log(error)
+            thunkAPI.rejectWithValue({
+              console:error.message,
+            })
         }
     }
 );
 
 
 
-export const fetchPosts = createAsyncThunk('posts/fetchPosts', 
-    async () => {
+export const fetchComments = createAsyncThunk('postComments/fetchComments', 
+    async (Opinionsid,thunkAPI)=>{
         try {
-            const response = await axios.get(url);
-            console.log({response})
-            const dataArray=[]
-            for(let key in response.data){
-
-                dataArray.push({
+            const res = await axios.get(`http://localhost:4000/Comments/get/${Opinionsid}`
+            );
         
-                  id: key,
-                  postQuestion: response.data[key].quiz, 
-                  postAnswer: response.data[key].Answers,     
-                });
-        
-              }
-            return dataArray
+            return res.data;
         } catch (error) {
-            console.log(error)
+            return thunkAPI.rejectWithValue({
+              error:error.message,
+            });
         }
     }
-)
+);
 
 
 
-export const answerSlice = createSlice({
+export const CommentsSlice = createSlice({
     name:'PostComments',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(createNewPost.fulfilled, (state, action) => {
-        //     state.posts.push(action.payload);
+        builder.addCase(createNewComments.fulfilled, (state, action) => {
+           state.loading =false;
         state.posts=action.payload.Answers
          });
-        builder.addCase(fetchPosts.fulfilled, (state, action) => {
+
+         builder.addCase(createNewComments.pending, (state, action) => {
+          state.loading = true;
+          state.Comments = [];
+        });
+
+        builder.addCase(fetchComments.fulfilled, (state, action) => {
             state.posts = action.payload
         })
     }
 });
 
-export default answerSlice.reducer;
+export default CommentsSlice.reducer;

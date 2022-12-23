@@ -4,7 +4,7 @@ const auth = require('../middleware/auth')
 
 const router= express.Router()
 
-router.get("/answers",getOpinions)
+router.get("/answers/:Quizesid",getOpinions)
 router.post("/addAns",auth, addAnswers)
 
 

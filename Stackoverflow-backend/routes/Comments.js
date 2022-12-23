@@ -4,7 +4,7 @@ const auth = require('../middleware/auth')
 
 const router= express.Router()
 
-router.get("/get",auth, getComments)
+router.get("/get", getComments)
 router.post("/comment",auth, addComments)
 
 
